@@ -1,31 +1,39 @@
 <template>
-    <div class="currency-rates">
-        <h1>Currency Rates</h1>
-        <v-card>
-            <v-card-title class="headline">Search for Currencies</v-card-title>
-            <v-card-text>
-                <v-autocomplete
-                    v-model="selectedCurrencies"
-                    :items="currencies"
-                    multiple
-                    hide-no-data
-                    hide-selected
-                    label="Currencies"
-                    placeholder="Start typing to Search"
-                ></v-autocomplete>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-expand-transition>
-                <v-list v-if="rates" class>
-                    <v-list-item v-for="currency in selectedCurrencies" :key="currency">
-                        <v-list-item-content>
-                            {{ currency }}: {{ rates[currency] }}
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </v-expand-transition>
-        </v-card>
-    </div>
+    <v-container fluid >
+        <v-row
+            justify="center"
+        >
+            <v-col class="text-center" :sm="6">
+                <div class="currency-rates">
+                    <h1>Currency Rates</h1>
+                    <v-card>
+                        <v-card-title class="headline">Search for Currencies</v-card-title>
+                        <v-card-text>
+                            <v-autocomplete
+                                v-model="selectedCurrencies"
+                                :items="currencies"
+                                multiple
+                                hide-no-data
+                                hide-selected
+                                label="Currencies"
+                                placeholder="Start typing to Search"
+                            ></v-autocomplete>
+                        </v-card-text>
+                        <v-divider></v-divider>
+                        <v-expand-transition>
+                            <v-list v-if="rates" class>
+                                <v-list-item v-for="currency in selectedCurrencies" :key="currency">
+                                    <v-list-item-content>
+                                        {{ currency }}: {{ rates[currency] }}
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-expand-transition>
+                    </v-card>
+                </div>
+            </v-col>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
@@ -57,6 +65,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h1 {
+    margin-bottom: 2rem;
+}
 h3 {
     margin: 40px 0 0;
 }
