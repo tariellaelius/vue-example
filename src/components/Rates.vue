@@ -1,23 +1,43 @@
 <template>
-  <div class="currency-rates">
-      <h1>Currency Rates</h1>
-      <div class="rates">
-          <ul>
-              <li v-for="(value, rate) in rates" v-bind:key="rate">
-                  {{ rate }}: {{ value }}
-              </li>
-          </ul>
-      </div>
-  </div>
+    <div class="currency-rates">
+        <h1>Currency Rates</h1>
+        <v-card>
+            <v-card-title class="headline">Search for Currencies</v-card-title>
+            <v-card-text>
+                <v-autocomplete
+                    v-model="selectedCurrencies"
+                    :items="currencies"
+                    multiple
+                    hide-no-data
+                    hide-selected
+                    label="Currencies"
+                    placeholder="Start typing to Search"
+                ></v-autocomplete>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-expand-transition>
+                <v-list v-if="rates" class>
+                    <v-list-item v-for="currency in selectedCurrencies" :key="currency">
+                        <v-list-item-content>
+                            {{ currency }}: {{ rates[currency] }}
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+            </v-expand-transition>
+        </v-card>
+    </div>
 </template>
 
 <script>
 import ratesAPIMixin from '../mixins/ratesAPIMixin';
 
+import allCurrencies from '@/data/currencies';
+
 export default {
     name: 'Rates',
     data() {
         return {
+            currencies: allCurrencies,
             selectedCurrencies: ['EUR'],
             rates: this.rates,
         };
@@ -28,7 +48,7 @@ export default {
     },
     methods: {
         async updateRates() {
-            const response = await this.getRates(this.selectedCurrencies);
+            const response = await this.getRates(allCurrencies);
             this.rates = response.rates;
         },
     },

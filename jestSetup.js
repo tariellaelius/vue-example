@@ -1,1 +1,7 @@
-require('jest-fetch-mock').enableMocks()
+
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+
+Vue.use(Vuetify);
+
+require('jest-fetch-mock').enableMocks();
