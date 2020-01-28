@@ -27,6 +27,7 @@
 <script>
 import CurrencyTable from '@/components/CurrencyTable.vue';
 
+import updateRatesMixin from '../mixins/updateRatesMixin';
 import ratesAPIMixin from '../mixins/ratesAPIMixin';
 
 import allCurrencies from '@/data/currencies';
@@ -47,15 +48,12 @@ export default {
         CurrencyTable,
     },
     props: ['currency'],
-    mixins: [ratesAPIMixin],
+    mixins: [
+        updateRatesMixin,
+        ratesAPIMixin,
+    ],
     mounted() {
-        this.updateRates();
-    },
-    methods: {
-        async updateRates() {
-            const response = await this.getRates(allCurrencies, this.currency);
-            this.rates = response.rates;
-        },
+        this.updateRates(allCurrencies, this.currency);
     },
     computed: {
         shownCurrencies: {
