@@ -12,9 +12,12 @@
                 :key="currency"
             >
                 <td>
-                    <router-link :to="currency">
+                    <router-link
+                        v-if="linked"
+                        :to="currency">
                         {{currency}}
                     </router-link>
+                    <span v-else>{{currency}}</span>
                 </td>
                 <td>{{ rates[currency] }}</td>
             </tr>
@@ -28,6 +31,7 @@ export default {
     props: {
         currencies: Array,
         rates: Object,
+        linked: Boolean,
     },
 };
 </script>

@@ -4,6 +4,7 @@
             <CurrencyTable
                 :currencies="selectedCurrencies"
                 :rates="rates"
+                :linked="true"
             />
         </v-expand-transition>
         <v-card-actions>
