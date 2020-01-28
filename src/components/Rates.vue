@@ -1,42 +1,24 @@
 <template>
-    <v-container fluid >
-        <v-row
-            justify="center"
-        >
-            <v-col class="text-center" :sm="6">
-                <div class="currency-rates">
-                    <h1>Currency Rates</h1>
-                    <v-card>
-                        <v-card-title class="headline">Search for Currencies</v-card-title>
-                        <v-card-text>
-                            <v-autocomplete
-                                v-model="selectedCurrencies"
-                                :items="currencies"
-                                multiple
-                                hide-no-data
-                                hide-selected
-                                label="Currencies"
-                                placeholder="Start typing to Search"
-                            ></v-autocomplete>
-                        </v-card-text>
-                        <v-divider></v-divider>
-                        <v-expand-transition>
-                            <v-list v-if="rates" class>
-                                <v-list-item v-for="currency in selectedCurrencies" :key="currency">
-                                    <v-list-item-content>
-                                        {{ currency }}: {{ rates[currency] }}
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list>
-                        </v-expand-transition>
-                    </v-card>
-                </div>
-            </v-col>
-        </v-row>
-    </v-container>
+    <v-card>
+        <v-expand-transition>
+            <CurrencyTable
+                :currencies="selectedCurrencies"
+                :rates="rates"
+            />
+        </v-expand-transition>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+                @click="$parent.$emit('SwitchComponent', 'Search')">
+                Search
+            </v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 
 <script>
+import CurrencyTable from './CurrencyTable.vue';
+
 import ratesAPIMixin from '../mixins/ratesAPIMixin';
 
 import allCurrencies from '@/data/currencies';
@@ -46,9 +28,11 @@ export default {
     data() {
         return {
             currencies: allCurrencies,
-            selectedCurrencies: ['EUR'],
             rates: this.rates,
         };
+    },
+    components: {
+        CurrencyTable,
     },
     mixins: [ratesAPIMixin],
     created() {
@@ -58,6 +42,13 @@ export default {
         async updateRates() {
             const response = await this.getRates(allCurrencies);
             this.rates = response.rates;
+        },
+    },
+    computed: {
+        selectedCurrencies: {
+            get() {
+                return this.$store.state.selectedCurrencies;
+            },
         },
     },
 };

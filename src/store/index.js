@@ -5,8 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        selectedCurrencies: ['EUR'],
     },
     mutations: {
+        setSelectedCurrencies(state, currencies) {
+            state.selectedCurrencies = currencies;
+        },
     },
     actions: {
     },
