@@ -2,8 +2,8 @@ const endpoint = 'https://api.ratesapi.io/api/latest';
 
 export default {
     methods: {
-        getRates(currencies) {
-            return fetch(`${endpoint}?base=USD&symbols=${currencies.join(',')}`)
+        getRates(currencies, base = 'USD') {
+            return fetch(`${endpoint}?base=${base}&symbols=${currencies.join(',')}`)
                 .then(response => response.json());
         },
     },
