@@ -19,7 +19,7 @@
                     </router-link>
                     <span v-else>{{currency}}</span>
                 </td>
-                <td>{{ rates[currency] }}</td>
+                <td>{{ rates[currency] | toFixed }}</td>
             </tr>
         </tbody>
     </v-simple-table>
@@ -32,6 +32,12 @@ export default {
         currencies: Array,
         rates: Object,
         linked: Boolean,
+    },
+    filters: {
+        toFixed(value) {
+            if (!value) return '';
+            return parseFloat(value).toFixed(4);
+        },
     },
 };
 </script>
